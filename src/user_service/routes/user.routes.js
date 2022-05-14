@@ -5,7 +5,7 @@ const userRoutes = express.Router();
 
 userRoutes.get("/login",  login);
 userRoutes.post("/register",  register);
-userRoutes.put("/edit",  updateUser);
+userRoutes.put("/update/:id",  updateUser);
 userRoutes.delete("/delete",  deleteUser);
 userRoutes.get("/:id",  getUserDetailsbiID);
 userRoutes.get("/",  getUserList);
