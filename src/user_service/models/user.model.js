@@ -18,6 +18,9 @@ const UserSchema = new Schema({
     address: {
         type: String,
     },
+    password: {
+        type: String,
+    },
     createdAt: {
         type: Date,
     },

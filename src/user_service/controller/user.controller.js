@@ -1,7 +1,9 @@
 import User from '../models/user.model.js'
+import bcrypt from "bcrypt";
+
 
 const register = async (req, res) => {
-    const { first_name, last_name, email, mobileNumber, address } = req.body;
+    const { first_name, last_name, email, mobileNumber, address,password } = req.body;
     try {
         //See if user Exist
         let user = await User.findOne({ email });
@@ -15,10 +17,14 @@ const register = async (req, res) => {
         var date = new Date()
         const createdAt = date;
         const updatedAt = date;
+
+        
         //create a user instance
         user = new User({
-            first_name, last_name, email, mobileNumber, address, createdAt, updatedAt
+            first_name, last_name, email, mobileNumber, address, createdAt, updatedAt,password
         });
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
         //save user to the database
         await user.save().then((response) => {
             res.json(response);
@@ -50,6 +56,10 @@ const updateUser = async (req, res) => {
                 if (req.body.address) {
                     userProfile.address = req.body.address;
                 }
+                if (req.body.password) {
+                    const salt = await bcrypt.genSalt(10);
+                    userProfile.password = await bcrypt.hash(req.body.address, salt);
+                }
                 var date = new Date()
                 userProfile.updatedAt = date
                 userProfile
@@ -80,7 +90,7 @@ const deleteUser = async (req, res) => {
 }
 const getUserDetailsbyID = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id)
+        const user = await User.findById(req.params.id).select("-password")
         res.json(user);
     } catch (err) {
         console.log(err.message);
@@ -89,7 +99,7 @@ const getUserDetailsbyID = async (req, res) => {
 }
 const getUserList = async (req, res) => {
     try {
-        const userList = await User.find()
+        const userList = await User.find().select("-password")
         res.json(userList);
     } catch (err) {
         console.log(err.message);
