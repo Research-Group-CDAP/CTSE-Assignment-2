@@ -1,9 +1,5 @@
 import User from '../models/user.model.js'
 
-const login = async (req, res) => {
-    res.status(200).send({ "msg": "tokencalled" })
-}
-
 const register = async (req, res) => {
     const { first_name, last_name, email, mobileNumber, address } = req.body;
     try {
@@ -101,4 +97,4 @@ const getUserList = async (req, res) => {
     }
 }
 
-export { login, register, updateUser, deleteUser, getUserDetailsbyID, getUserList }
+export {  register, updateUser, deleteUser, getUserDetailsbyID, getUserList }
