@@ -1,12 +1,17 @@
 import express from "express";
 import cors from "cors";
+import { connect } from "./util/database_con/db.js";
+import userRoutes from "./routes/user.routes.js"
+import "dotenv/config";
 
 const app = express()
+connect();
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => res.send("Spades Todo running"));
+app.get("/", (req, res) => res.send("User service running"));
+app.use("/api/user", userRoutes);
 
 
 const PORT = process.env.PORT || 5001;
