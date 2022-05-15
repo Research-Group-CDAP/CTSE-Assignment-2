@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build and push order service
     - name: Docker login
       run: | # Login to Dockerhub - Rusriu
         docker login -u $DOCKER_USER_RUSIRU -p $DOCKER_PASSWORD_RUSIRU
@@ -29,7 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build and push email service
     - name: Docker login
       run: | # Login to Dockerhub - Rusriu
         docker login -u $DOCKER_USER_RUSIRU -p $DOCKER_PASSWORD_RUSIRU
