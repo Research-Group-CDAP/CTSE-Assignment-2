@@ -3,3 +3,8 @@ To Get Azure Credentials
 Reffer following documentation 
 https://github.com/Azure/login
 https://medium.com/ascentic-technology/github-action-deploy-applications-to-aks-7598668f8ee1
+
+
+About Image Tag 
+------------------------------
+https://kubernetes.io/docs/concepts/containers/images/
