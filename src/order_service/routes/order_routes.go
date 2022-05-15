@@ -9,4 +9,5 @@ import (
 func OrderRoutes(app *fiber.App) {
 	app.Post("/order", controllers.CreateOrder)
 	app.Get("/order", controllers.GetOrders)
+	app.Get("/order/:orderId", controllers.GetOrderById)
 }
