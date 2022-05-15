@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: productservice 
-          image: docker.io/senuradockacc/product_service:latest # Image that will be used to containers in the cluster
+          image: docker.io/senuradockacc/product_service:v1.0.1 # Image that will be used to containers in the cluster
           imagePullPolicy: Always
           ports:
             - containerPort: 8082 # The port that the container is running on in the cluster
