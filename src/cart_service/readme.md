@@ -46,3 +46,8 @@ Deploy Microservice Applications
 6) kubectl apply -f cart-service.yaml
 7) kubectl get service --watch
 8) kubectl get pods
+
+
+To Get Azure Credentials
+-----------------------------
+Reffer this documentation - https://github.com/Azure/login
