@@ -6,9 +6,7 @@ ENV GO111MODULE=on
 
 WORKDIR /email_service
 
-COPY go.mod .
-
-COPY go.sum .
+COPY go.mod go.sum ./
 
 RUN go mod download
 
