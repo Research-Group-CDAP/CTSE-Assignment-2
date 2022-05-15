@@ -30,3 +30,19 @@ docker tag cart_service:latest senuradockacc/cart_service:latest
 Push to Docker Hub
 ---------------------------------------------------
 docker push senuradockacc/cart_service:latest
+
+==================================================
+Deploy in Azure Kubenetes Cluster
+==================================================
+
+Login to Azure
+---------------------------------------------------------------------------------------
+1) az login
+2) az aks get-credentials --resource-group CTSE --name ctse
+3) kubectl get nodes
+
+Deploy Microservice Applications
+---------------------------------------------------------------------------------------
+6) kubectl apply -f cart-service.yaml
+7) kubectl get service --watch
+8) kubectl get pods
