@@ -24,21 +24,24 @@ func Send(c *fiber.Ctx) error {
 		SendBadRequestResponse(c, &fiber.Map{"data": err.Error()})
 	}
 
+	from := EnvSenderEmail()
+	password := EnvSenderPassword()
+
 	client := gomail.NewMessage()
 
-	client.SetHeader("From", EnvSenderEmail())
+	client.SetHeader("From", from)
 	client.SetHeader("To", email.To)
 	client.SetHeader("Subject", email.Subject)
 	client.SetBody("text/html", email.Body)
 
-	auth := gomail.NewDialer("smtp.gmail.com", 587, EnvSenderEmail(), EnvSenderPassword())
+	auth := gomail.NewDialer("smtp.gmail.com", 587, from, password)
 
 	if err := auth.DialAndSend(client); err != nil {
 		fmt.Println(err.Error())
 	}
 
+	fmt.Println("Email sent successfully ✅")
 	SendSuccessResponse(c, &fiber.Map{"data": email})
-
 	return nil
 }
 

@@ -1,8 +1,11 @@
 package controllers
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"order_service/configs"
 	"order_service/handlers"
 	"order_service/models"
@@ -38,12 +41,31 @@ func CreateOrder(c *fiber.Ctx) error {
 		OrderDiscription: order.OrderDiscription,
 		OrderFee:         order.OrderFee,
 		Products:         order.Products,
+		UserInfo:         order.UserInfo,
 	}
 
 	_, err := orderCollection.InsertOne(ctx, newOrder)
 	if err != nil {
 		handlers.SendErrorResponse(c, &fiber.Map{"data": err.Error()})
 	}
+
+	// Call email service
+	endPoint := configs.EnvEmailService() + "/send"
+	subject := "Order #" + newOrder.OrderId.String()
+	body := "<h3>Hello " + newOrder.UserInfo.FirstName + " " + newOrder.UserInfo.LastName + "</h3>" + "<p>Your order created successfully.</p>" + "<p>Order ID: #" + newOrder.OrderId.String() + "</p>"
+	emailData := map[string]string{"to": newOrder.UserInfo.Email, "subject": subject, "body": body}
+	jsonData, err := json.Marshal(emailData)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	fmt.Println("📧 Sending email...")
+	resp, err := http.Post(endPoint, "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	json.NewDecoder(resp.Body)
 
 	handlers.SendSuccessResponse(c, &fiber.Map{"data": newOrder})
 	return nil
