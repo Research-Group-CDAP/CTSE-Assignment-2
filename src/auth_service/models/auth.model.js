@@ -20,4 +20,4 @@ const AuthSchema = new Schema({
 });
 
 const Auth = mongoose.model("Auth", AuthSchema);
-export default User;
+export default Auth;

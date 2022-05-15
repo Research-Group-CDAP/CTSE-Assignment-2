@@ -16,10 +16,6 @@ const addAuthConfig = async (req, res) => {
             await auth.save()
 
         }
-
-
-        
-
     } catch (err) {
         //Something wrong with the server
         console.error(err.message);
@@ -28,4 +24,4 @@ const addAuthConfig = async (req, res) => {
 }
 
 
-export {  addAuthConfig}
+export {addAuthConfig}

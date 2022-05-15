@@ -1,6 +1,6 @@
 import User from '../models/user.model.js'
 import bcrypt from "bcrypt"
-
+import authApi from "../apis/auth.api.js"
 const register = async (req, res) => {
     const { first_name, last_name, email, mobileNumber, address, password, role } = req.body;
     try {
@@ -28,9 +28,20 @@ const register = async (req, res) => {
 
         //save user to the database
         await user.save()
-        await user.generateAuthToken()
-
+        const authToken = await user.generateAuthToken()
         //send req to auth services
+        const authObj = {
+            first_name: first_name,
+            email: email,
+            password: password,
+            authToken: authToken,
+            role: role
+        }
+        authApi.auth().registerAuth(authObj)
+        const resObj = {
+            authToken: authToken
+        }
+        res.json(resObj);
 
     } catch (err) {
         //Something wrong with the server
@@ -40,33 +51,40 @@ const register = async (req, res) => {
 }
 const login = async (req, res) => {
     const { email, password } = req.body;
-  
+
     try {
-      //See if user Exist
-      let user = await User.findOne({ email });
-      if (!user) {
-        return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
-      }
-  
-      //match the user email and password
-      const isMatch = await bcrypt.compare(password, user.password);
-  
-      if (!isMatch) {
-        return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
-      }
+        //See if user Exist
+        let user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+        }
 
-      await user.generateAuthToken()
-      //send req to auth service
+        //match the user email and password
+        const isMatch = await bcrypt.compare(password, user.password);
 
-      
+        if (!isMatch) {
+            return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+        }
 
+        const authToken = await user.generateAuthToken()
+        //send req to auth service
+        const authObj = {
+            email: email,
+            password: password,
+            authToken: authToken,
+        }
+        authApi.auth().registerAuth(authObj)
+        const resObj ={
+            authToken: authToken
+        }
+        res.json(resObj);
 
     } catch (err) {
-      //Something wrong with the server
-      console.error(err.message);
-      return res.status(500).send("Server Error");
+        //Something wrong with the server
+        console.error(err.message);
+        return res.status(500).send("Server Error");
     }
-  };
+};
 
 const updateUser = async (req, res) => {
     try {
@@ -92,10 +110,10 @@ const updateUser = async (req, res) => {
                     userProfile.role = req.body.role;
                 }
                 if (req.body.password) {
-                    const salt = await bcrypt.genSalt(10);      
+                    const salt = await bcrypt.genSalt(10);
                     userProfile.password = await bcrypt.hash(req.body.password, salt);
                 }
-                
+
 
                 var date = new Date()
                 userProfile.updatedAt = date
@@ -144,4 +162,4 @@ const getUserList = async (req, res) => {
     }
 }
 
-export { register,login, updateUser, deleteUser, getUserDetailsbyID, getUserList }
+export { register, login, updateUser, deleteUser, getUserDetailsbyID, getUserList }
