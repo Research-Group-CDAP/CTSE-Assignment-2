@@ -64,7 +64,7 @@ jobs:
     - name: Build cart service docker image
       run: |
         cd src/cart_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:latest
+        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1
     - name: Push cart service docker image
       run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1
   
