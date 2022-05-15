@@ -15,7 +15,6 @@ apiVersion: apps/v1
 kind: Deployment # Kubernetes resource kind we are creating
 metadata:
   name: productservice
-  description: productservice-${{ github.sha }}
 spec:
   selector:
     matchLabels:
@@ -32,3 +31,6 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8082 # The port that the container is running on in the cluster
+          env:
+          - name: COMMITID
+            value: ${{ github.sha }}

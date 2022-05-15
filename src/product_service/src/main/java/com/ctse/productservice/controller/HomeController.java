@@ -14,7 +14,7 @@ public class HomeController {
 
     @GetMapping("/")
     public ResponseEntity<?> getHomePage(){
-        return new ResponseEntity<>("Product Microservice Running", HttpStatus.OK);
+        return new ResponseEntity<>("Product Microservice Running - Updated", HttpStatus.OK);
     }
 
 }
