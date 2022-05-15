@@ -1,9 +1,8 @@
 import User from '../models/user.model.js'
-import bcrypt from "bcrypt";
-
+import bcrypt from "bcrypt"
 
 const register = async (req, res) => {
-    const { first_name, last_name, email, mobileNumber, address,password } = req.body;
+    const { first_name, last_name, email, mobileNumber, address, password, role } = req.body;
     try {
         //See if user Exist
         let user = await User.findOne({ email });
@@ -18,23 +17,56 @@ const register = async (req, res) => {
         const createdAt = date;
         const updatedAt = date;
 
-        
+
         //create a user instance
         user = new User({
-            first_name, last_name, email, mobileNumber, address, createdAt, updatedAt,password
+            first_name, last_name, email, mobileNumber, address, password, role, createdAt, updatedAt
         });
         const salt = await bcrypt.genSalt(10);
+        //hashing password
         user.password = await bcrypt.hash(password, salt);
+
         //save user to the database
-        await user.save().then((response) => {
-            res.json(response);
-        });
+        await user.save()
+        await user.generateAuthToken()
+
+        //send req to auth services
+
     } catch (err) {
         //Something wrong with the server
         console.error(err.message);
         return res.status(500).send("Server Error");
     }
 }
+const login = async (req, res) => {
+    const { email, password } = req.body;
+  
+    try {
+      //See if user Exist
+      let user = await User.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+      }
+  
+      //match the user email and password
+      const isMatch = await bcrypt.compare(password, user.password);
+  
+      if (!isMatch) {
+        return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+      }
+
+      await user.generateAuthToken()
+      //send req to auth service
+
+      
+
+
+    } catch (err) {
+      //Something wrong with the server
+      console.error(err.message);
+      return res.status(500).send("Server Error");
+    }
+  };
 
 const updateUser = async (req, res) => {
     try {
@@ -56,10 +88,15 @@ const updateUser = async (req, res) => {
                 if (req.body.address) {
                     userProfile.address = req.body.address;
                 }
-                if (req.body.password) {
-                    const salt = await bcrypt.genSalt(10);
-                    userProfile.password = await bcrypt.hash(req.body.address, salt);
+                if (req.body.role) {
+                    userProfile.role = req.body.role;
                 }
+                if (req.body.password) {
+                    const salt = await bcrypt.genSalt(10);      
+                    userProfile.password = await bcrypt.hash(req.body.password, salt);
+                }
+                
+
                 var date = new Date()
                 userProfile.updatedAt = date
                 userProfile
@@ -107,4 +144,4 @@ const getUserList = async (req, res) => {
     }
 }
 
-export {  register, updateUser, deleteUser, getUserDetailsbyID, getUserList }
+export { register,login, updateUser, deleteUser, getUserDetailsbyID, getUserList }

@@ -21,6 +21,12 @@ const UserSchema = new Schema({
     password: {
         type: String,
     },
+    authToken: {
+        type: String,
+    },
+    role: {
+        type: String,
+    },
     createdAt: {
         type: Date,
     },
@@ -29,6 +35,14 @@ const UserSchema = new Schema({
     }
     
 });
+UserSchema.methods.generateAuthToken = async function () {
+	const user = this;
+	const secret = process.env.JWT_SECRET;
+	const authToken = jwt.sign({ _id: user._id , role: user.role , email:user.email}, secret);
+	user.authToken = authToken;
+	await user.save();
+	return authToken;
+};
 
 const User = mongoose.model("User", UserSchema);
 export default User;
