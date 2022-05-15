@@ -57,7 +57,7 @@ jobs:
     - name: Build with Maven
       run: |
         cd src/cart_service
-        mvn clean install
+        mvn clean package
     - name: Docker login
       run: | # Login to Dockerhub - Senura
         docker login -u $DOCKER_USER_SENURA -p $DOCKER_PASSWORD_SENURA
@@ -79,7 +79,7 @@ jobs:
     - name: Build with Maven
       run: |
         cd src/product_service
-        mvn clean install
+        mvn clean package
     - name: Docker login
       run: | # Login to Dockerhub - Senura
         docker login -u $DOCKER_USER_SENURA -p $DOCKER_PASSWORD_SENURA
