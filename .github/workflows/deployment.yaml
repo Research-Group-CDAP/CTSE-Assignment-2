@@ -1,0 +1,40 @@
+name: ClickToCart CI/CD Pipeline
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+env:
+  DOCKER_USER_RUSIRU: ${{secrets.DOCKER_USER_RUSIRU}}
+  DOCKER_PASSWORD_RUSIRU: ${{secrets.DOCKER_PASSWORD_RUSIRU}}
+  ORDER_REPO_NAME_RUSIRU: ${{secrets.ORDER_REPO_NAME_RUSIRU}}
+  EMAIL_REPO_NAME_RUSIRU: ${{secrets.EMAIL_REPO_NAME_RUSIRU}}
+
+jobs:
+  order-service:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push order service
+    - name: Docker login
+      run: | # Login to Dockerhub - Rusriu
+        docker login -u $DOCKER_USER_RUSIRU -p $DOCKER_PASSWORD_RUSIRU
+    - name: Build order service docker image
+      run: docker build . --file src/order_service/Dockerfile --tag $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:latest
+    - name: Push order service docker image
+      run: docker push $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:latest
+  
+  email-service:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push email service
+    - name: Docker login
+      run: | # Login to Dockerhub - Rusriu
+        docker login -u $DOCKER_USER_RUSIRU -p $DOCKER_PASSWORD_RUSIRU
+    - name: Build email service docker image
+      run: docker build . --file src/email_service/Dockerfile --tag $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
+    - name: Push email service docker image
+      run: docker push $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
+    
