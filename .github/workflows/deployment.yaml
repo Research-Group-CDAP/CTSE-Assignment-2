@@ -103,6 +103,4 @@ jobs:
     - name: Work Dir
       run: echo $(pwd)
     - name: ⬆️ Deploy to K8s
-      run: |
-        cd release
-        kubectl apply -f release/
+      run: kubectl apply -f release/
