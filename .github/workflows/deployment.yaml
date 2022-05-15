@@ -17,6 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Docker login
+      run: echo $(pwd)
       run: | # Login to Dockerhub - Rusriu
         docker login -u $DOCKER_USER_RUSIRU -p $DOCKER_PASSWORD_RUSIRU
     - name: Build order service docker image
@@ -32,7 +33,7 @@ jobs:
       run: | # Login to Dockerhub - Rusriu
         docker login -u $DOCKER_USER_RUSIRU -p $DOCKER_PASSWORD_RUSIRU
     - name: Build email service docker image
-      run: docker build src/email_service --file Dockerfile --tag $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
+      run: docker build src/email_service/ --file Dockerfile --tag $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
     - name: Push email service docker image
       run: docker push $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
     
