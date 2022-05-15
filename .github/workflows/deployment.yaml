@@ -72,6 +72,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Set up Java version
+      uses: actions/setup-java@v1
+      with:
+        java-version: '1.8'
+    - name: Build with Maven
+      run: |
+        cd src/product_service
+        mvn clean install
     - name: Docker login
       run: | # Login to Dockerhub - Senura
         docker login -u $DOCKER_USER_SENURA -p $DOCKER_PASSWORD_SENURA
