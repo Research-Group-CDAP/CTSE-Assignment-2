@@ -1,5 +1,5 @@
 import Auth from '../models/auth.model.js'
-
+import jwt from "jsonwebtoken"
 
 const addAuthConfig = async (req, res) => {
     const { first_name,email, password , authToken ,role} = req.body;
@@ -23,5 +23,24 @@ const addAuthConfig = async (req, res) => {
     }
 }
 
+const authorize = async (req, res) => {
+    try {
+		const secret = process.env.JWT_SECRET;
 
-export {addAuthConfig}
+		if (secret) {
+			const authToken = req.header("Authorization");
+			const decodedToken = jwt.verify(authToken, secret);
+            console.log(decodedToken)
+            return res.status(500).send("Success");
+
+		} else {
+            return res.status(500).send("Secret not found");
+        }
+	} catch (err) {
+        console.error(err.message);
+        return res.status(500).send("Server Error");
+    }
+}
+
+
+export {addAuthConfig,authorize}
