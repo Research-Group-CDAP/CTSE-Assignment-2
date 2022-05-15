@@ -15,7 +15,6 @@ apiVersion: apps/v1
 kind: Deployment # Kubernetes resource kind we are creating
 metadata:
   name: cartservice
-  description: cartservice-${{ github.sha }}
 spec:
   selector:
     matchLabels:
