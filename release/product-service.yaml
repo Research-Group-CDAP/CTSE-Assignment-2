@@ -4,7 +4,7 @@ metadata: # Metadata of the resource kind we are creating
   name: product-service
 spec:
   selector:
-    app: productservice-${{ github.sha }}
+    app: productservice
   ports:
     - protocol: "TCP"
       port: 8082 # The port that the service is running on in the cluster
@@ -14,19 +14,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment # Kubernetes resource kind we are creating
 metadata:
-  name: productservice-${{ github.sha }}
+  name: productservice
+  description: productservice-${{ github.sha }}
 spec:
   selector:
     matchLabels:
-      app: productservice-${{ github.sha }}
+      app: productservice
   replicas: 2 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
-        app: productservice-${{ github.sha }}
+        app: productservice
     spec:
       containers:
-        - name: productservice-${{ github.sha }} 
+        - name: productservice 
           image: docker.io/senuradockacc/product_service:latest # Image that will be used to containers in the cluster
           imagePullPolicy: Always
           ports:
