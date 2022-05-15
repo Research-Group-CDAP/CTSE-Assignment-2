@@ -19,8 +19,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build
 
 FROM alpine:3.8
 
-ENV MONGO_URL=mongodb+srv://rusiru:RavB1998@linkup-cluster.a1bvi.mongodb.net/clicktocart?retryWrites=true&w=majority
-
 WORKDIR /root/
 
 COPY --from=build /order_service/order_service .
