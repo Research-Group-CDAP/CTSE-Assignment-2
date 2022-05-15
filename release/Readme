@@ -1,9 +1,8 @@
-To Get Azure Credentials
------------------------------
+To Get Azure Credentials For Azure Kubenetes Cluster
+---------------------------------------------------------------------------------------------
 Reffer following documentation 
 https://github.com/Azure/login
 https://medium.com/ascentic-technology/github-action-deploy-applications-to-aks-7598668f8ee1
-
 
 About Image Tag 
 ------------------------------
