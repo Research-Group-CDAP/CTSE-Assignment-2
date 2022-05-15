@@ -12,13 +12,13 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Order Service")
+		return c.SendString("📦 Order Service")
 	})
 
 	routes.OrderRoutes(app)
 
 	configs.ConnectDB()
-	fmt.Println("Database Synced")
-
+	fmt.Println("✨ Database Synced")
+	fmt.Println("📦 Order service is running")
 	app.Listen(":9090")
 }
