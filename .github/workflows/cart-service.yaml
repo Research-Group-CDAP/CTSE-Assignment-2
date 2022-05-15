@@ -34,9 +34,9 @@ jobs:
     - name: Build cart service docker image
       run: |
         cd src/cart_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:${{ github.sha }}
+        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA@${{ github.sha }}
     - name: Push cart service docker image
-      run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:${{ github.sha }}
+      run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA@${{ github.sha }}
     - uses: Azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'

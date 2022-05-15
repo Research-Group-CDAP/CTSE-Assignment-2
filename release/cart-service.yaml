@@ -27,6 +27,6 @@ spec:
     spec:
       containers:
         - name: cartservice 
-          image: docker.io/senuradockacc/cart_service:${{ github.sha }} # Image that will be used to containers in the cluster
+          image: docker.io/senuradockacc/cart_service@${{ github.sha }} # Image that will be used to containers in the cluster
           ports:
             - containerPort: 8081 # The port that the container is running on in the cluster
