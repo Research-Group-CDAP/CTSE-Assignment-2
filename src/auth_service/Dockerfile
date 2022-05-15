@@ -1,5 +1,5 @@
 FROM node:16-alpine3.14 AS BUILD_IMAGE
-RUN apk --no-cache add --virtual builds-deps build-base python
+RUN apk add --no-cache nodejs npm
 WORKDIR /auth_service
 # COPY ["package.json", "./"]
 COPY ["package.json", "./"]
