@@ -21,10 +21,10 @@ jobs:
     - name: Docker login
       run: | # Login to Dockerhub - Rusriu
         docker login -u $DOCKER_USER_RUSIRU -p $DOCKER_PASSWORD_RUSIRU
-    - name: Change directory
-      run: cd src/order_service
     - name: Build order service docker image
-      run: docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:latest
+      run: |
+        cd src/order_service
+        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:latest
     - name: Push order service docker image
       run: docker push $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:latest
   
