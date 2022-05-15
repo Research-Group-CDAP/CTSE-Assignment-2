@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: emailservice
-          image: docker.io/rusiruavb/email-service:latest
+          image: docker.io/rusiruavb/email-service:v1.0.0
           ports:
             - containerPort: 9040
           env:

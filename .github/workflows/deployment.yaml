@@ -28,9 +28,9 @@ jobs:
     - name: Build order service docker image
       run: |
         cd src/order_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:latest
+        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:v1.0.0
     - name: Push order service docker image
-      run: docker push $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:latest
+      run: docker push $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:v1.0.0
   
   email-service:
     runs-on: ubuntu-latest
@@ -42,9 +42,9 @@ jobs:
     - name: Build email service docker image
       run: |
         cd src/email_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
+        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:v1.0.0
     - name: Push email service docker image
-      run: docker push $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
+      run: docker push $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:v1.0.0
   
   cart-service:
     runs-on: ubuntu-latest
@@ -67,13 +67,6 @@ jobs:
         docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:latest
     - name: Push cart service docker image
       run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:latest
-    - uses: Azure/aks-set-context@v1
-      with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: ctse
-        resource-group: CTSE
-    - name: Deploy to K8s
-      run: kubectl apply -f release/cart-service.yaml
   
   product-service:
     runs-on: ubuntu-latest
@@ -96,10 +89,15 @@ jobs:
         docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:latest
     - name: Push cart service docker image
       run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:latest
-    - uses: Azure/aks-set-context@v1
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🛠 Configure Kubernetes Credentials
+      uses: Azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: ctse
         resource-group: CTSE
-    - name: Deploy to K8s
-      run: kubectl apply -f release/product-service.yaml
+    - name: ⬆️ Deploy to K8s
+      run: kubectl apply -f release/

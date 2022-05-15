@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: orderservice
-          image: docker.io/rusiruavb/order-service:latest
+          image: docker.io/rusiruavb/order-service:v1.0.0
           ports:
             - containerPort: 9090
           env:
