@@ -2,13 +2,15 @@
 
 FROM golang:1.18-alpine AS build
 
-ENV GO111MODULE=on
+ENV GO111MODULE=auto
 
 WORKDIR /order_service
 
-COPY . .
+COPY go.mod go.sum ./
 
 RUN go mod download
+
+COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build
 
@@ -18,8 +20,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build
 # Deploy
 
 FROM alpine:3.8
-
-ENV MONGO_URL=mongodb+srv://rusiru:RavB1998@linkup-cluster.a1bvi.mongodb.net/clicktocart?retryWrites=true&w=majority
 
 WORKDIR /root/
 

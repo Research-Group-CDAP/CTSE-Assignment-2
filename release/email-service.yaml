@@ -1,3 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: email-secret
+data:
+  SENDER_EMAIL: eWVhcjRyZXNlYXJjaHRlYW1zbGlpdEBnbWFpbC5jb20=
+  SENDER_PASSWORD: eWVhcjRyZXNlYXJjaDE5OTg=
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,25 +23,31 @@ spec:
         app: emailservice
     spec:
       containers:
-      - name: emailservice
-        image: docker.io/rusiruavb/email-service:latest
-        ports:
-        - containerPort: 9040
-        env:
-        - name: SENDER_EMAIL
-          value: test@gmail.com
-        - name: SENDER_PASSWORD
-          value: testpassword
+        - name: emailservice
+          image: docker.io/rusiruavb/email-service:latest
+          ports:
+            - containerPort: 9040
+          env:
+            - name: SENDER_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: email-secret
+                  key: SENDER_EMAIL
+            - name: SENDER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: email-secret
+                  key: SENDER_PASSWORD
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: emailservice
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: emailservice
   ports:
-  - protocol: TCP
-    port: 9040
-    targetPort: 9040
+    - protocol: TCP
+      port: 9040
+      targetPort: 9040
