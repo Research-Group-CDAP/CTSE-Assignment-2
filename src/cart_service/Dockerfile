@@ -1,10 +1,4 @@
-FROM openjdk:8-jdk-alpine as builder
-RUN mkdir -p /app/source
-COPY . /app/source
-WORKDIR /app/source
-RUN ./mvnw clean package
-
-FROM builder
-COPY --from=builder /app/source/target/*.jar /app/app.jar
+FROM openjdk:8-jdk-alpine
+COPY target/*.jar cartservice.jar
 EXPOSE 8081
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java","-jar","/cartservice.jar"]
