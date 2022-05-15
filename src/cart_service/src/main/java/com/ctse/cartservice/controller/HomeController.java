@@ -12,7 +12,7 @@ public class HomeController {
 
     @GetMapping("/")
     public ResponseEntity<?> getHomePage(){
-        return new ResponseEntity<>("Cart Microservice Running - Updated", HttpStatus.OK);
+        return new ResponseEntity<>("Cart Microservice Running", HttpStatus.OK);
     }
 
 }
