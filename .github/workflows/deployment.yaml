@@ -16,8 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Docker login
+    - name: Work Dir
       run: echo $(pwd)
+    - name: Docker login
       run: | # Login to Dockerhub - Rusriu
         docker login -u $DOCKER_USER_RUSIRU -p $DOCKER_PASSWORD_RUSIRU
     - name: Build order service docker image
