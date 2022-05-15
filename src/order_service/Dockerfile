@@ -2,13 +2,11 @@
 
 FROM golang:1.18-alpine AS build
 
-ENV GO111MODULE=on
+ENV GO111MODULE=auto
 
 WORKDIR /order_service
 
-COPY go.mod .
-
-COPY go.sum .
+COPY go.mod go.sum ./
 
 RUN go mod download
 
