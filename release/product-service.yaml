@@ -1,33 +1,33 @@
 apiVersion: v1 # Kubernetes API version
 kind: Service # Kubernetes resource kind we are creating
 metadata: # Metadata of the resource kind we are creating
-  name: cart-service
+  name: product-service
 spec:
   selector:
-    app: cartservice
+    app: productservice
   ports:
     - protocol: "TCP"
-      port: 8081 # The port that the service is running on in the cluster
-      targetPort: 8081 # The port exposed by the service
+      port: 8082 # The port that the service is running on in the cluster
+      targetPort: 8082 # The port exposed by the service
   type: LoadBalancer # type of the service. LoadBalancer indicates that our service will be external.
 ---
 apiVersion: apps/v1
 kind: Deployment # Kubernetes resource kind we are creating
 metadata:
-  name: cartservice
+  name: productservice
 spec:
   selector:
     matchLabels:
-      app: cartservice
+      app: productservice
   replicas: 2 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
-        app: cartservice
+        app: productservice
     spec:
       containers:
-        - name: cartservice 
-          image: docker.io/senuradockacc/cart_service:latest # Image that will be used to containers in the cluster
+        - name: productservice 
+          image: docker.io/senuradockacc/product_service:latest # Image that will be used to containers in the cluster
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8081 # The port that the container is running on in the cluster
+            - containerPort: 8082 # The port that the container is running on in the cluster
