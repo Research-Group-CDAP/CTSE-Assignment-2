@@ -10,13 +10,13 @@ Build Docker Image
 ---------------------------------------------------------
 docker build -t product_service:latest .
 
-Run Docker Image
----------------------------------------------------------
-docker run -p 8080:8080 product_service:latest
-
 List the Docker Images
 ------------------------------
 docker image ls
+
+Run Docker Image
+---------------------------------------------------------
+docker run -p 8082:8082 product_service:latest
 
 Login to Docker Hub
 ---------------------------------------------------------

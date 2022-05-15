@@ -10,13 +10,13 @@ Build Docker Image
 ---------------------------------------------------------
 docker build -t cart_service:latest .
 
-Run Docker Image
----------------------------------------------------------
-docker run -p 8081:8081 cart_service:latest 
-
 List the Docker Images
 ------------------------------
 docker image ls
+
+Run Docker Image
+---------------------------------------------------------
+docker run -p 8081:8081 cart_service:latest 
 
 Login to Docker Hub
 ---------------------------------------------------------
