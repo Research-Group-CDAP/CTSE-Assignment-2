@@ -38,7 +38,7 @@ kind: Service
 metadata:
   name: orderservice
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: orderservice
   ports:
