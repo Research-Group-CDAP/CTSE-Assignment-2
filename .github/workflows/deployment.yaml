@@ -91,6 +91,7 @@ jobs:
       run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:latest
   
   deploy:
+    needs: [order-service, email-service, cart-service, product-service]
     runs-on: ubuntu-latest
     steps:
     - name: 🛠 Configure Kubernetes Credentials
