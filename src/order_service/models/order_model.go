@@ -26,8 +26,8 @@ type OrderProduct struct {
 }
 
 type OrderUser struct {
-	Email     string `json:"email,omitempty" validate:"required"`
-	UserId    string `json:"userid,omitempty" validate:"required"`
-	FirstName string `json:"firstname,omitempty" validate:"required"`
-	LastName  string `json:"lastname,omitempty" validate:"required"`
+	Email     string             `json:"email" validate:"required"`
+	UserId    primitive.ObjectID `json:"userid" validate:"required"`
+	FirstName string             `json:"firstname" validate:"required"`
+	LastName  string             `json:"lastname" validate:"required"`
 }

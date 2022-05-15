@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math"
 	"net/http"
 	"order_service/configs"
 	"order_service/handlers"
@@ -37,7 +38,7 @@ func CreateOrder(c *fiber.Ctx) error {
 
 	newOrder := models.Order{
 		OrderId:          primitive.NewObjectID(),
-		OrderDate:        time.Now().String(),
+		OrderDate:        time.Now().UTC().String(),
 		OrderDiscription: order.OrderDiscription,
 		OrderFee:         order.OrderFee,
 		Products:         order.Products,
@@ -51,8 +52,10 @@ func CreateOrder(c *fiber.Ctx) error {
 
 	// Call email service
 	endPoint := configs.EnvEmailService() + "/send"
-	subject := "Order #" + newOrder.OrderId.String()
-	body := "<h3>Hello " + newOrder.UserInfo.FirstName + " " + newOrder.UserInfo.LastName + "</h3>" + "<p>Your order created successfully.</p>" + "<p>Order ID: #" + newOrder.OrderId.String() + "</p>"
+	subject := "Order #" + newOrder.OrderId.Hex()
+	orderPriceFloat := math.Round(newOrder.OrderFee*100) / 100
+	orderPriceStr := fmt.Sprintf("%.2f", orderPriceFloat)
+	body := "<h3>Hello " + newOrder.UserInfo.FirstName + " " + newOrder.UserInfo.LastName + "</h3>" + "<p>Your order created successfully.</p>" + "<p>Order ID: #" + newOrder.OrderId.Hex() + "</p>" + "<p>Total Price - Rs." + orderPriceStr + "</p>"
 	emailData := map[string]string{"to": newOrder.UserInfo.Email, "subject": subject, "body": body}
 	jsonData, err := json.Marshal(emailData)
 	if err != nil {
@@ -66,6 +69,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	}
 
 	json.NewDecoder(resp.Body)
+	fmt.Println("✅ Email sent")
 
 	handlers.SendSuccessResponse(c, &fiber.Map{"data": newOrder})
 	return nil
