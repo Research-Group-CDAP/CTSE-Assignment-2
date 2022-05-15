@@ -4,6 +4,7 @@ metadata:
   name: order-secret
 data:
   MONGO_URL: bW9uZ29kYitzcnY6Ly9ydXNpcnU6UmF2QjE5OThAbGlua3VwLWNsdXN0ZXIuYTFidmkubW9uZ29kYi5uZXQvY2xpY2t0b2NhcnQ/cmV0cnlXcml0ZXM9dHJ1ZSZ3PW1ham9yaXR5
+  EMAIL_SERVICE: aHR0cDovLzEwLjAuNDEuMTAyOjkwNDA=
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -32,6 +33,11 @@ spec:
                 secretKeyRef:
                   name: order-secret
                   key: MONGO_URL
+            - name: EMAIL_SERVICE
+              valueFrom:
+                secretKeyRef:
+                  name: order-secret
+                  key: EMAIL_SERVICE
 ---
 apiVersion: v1
 kind: Service
