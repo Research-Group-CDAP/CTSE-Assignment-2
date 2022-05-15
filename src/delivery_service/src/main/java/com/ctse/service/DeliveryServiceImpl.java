@@ -2,6 +2,7 @@ package com.ctse.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,6 +64,37 @@ public class DeliveryServiceImpl implements DeliveryService {
 			response.setStatusCode("999");
 			response.setStatusMsg("FAIL");
 		}
+		return response;
+	}
+
+	@Override
+	public Delivery getDeliveryById(String id) {
+		
+		Optional<Delivery> delivery = deliveryRepository.findById(id);
+		
+		if(delivery.isPresent()) {
+			return delivery.get();
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public DeliveryResponse deleteDelivery(String deliveryId) {
+		
+		DeliveryResponse response = new DeliveryResponse();
+		
+		try{
+			deliveryRepository.deleteById(deliveryId);
+			
+			response.setStatusCode("000");
+			response.setStatusMsg("Successfully deleted the delivery " + deliveryId);
+
+		}catch (Exception e){
+			response.setStatusCode("999");
+			response.setStatusMsg("Delivery item deletion failed.");
+        }
+		
 		return response;
 	}
 
