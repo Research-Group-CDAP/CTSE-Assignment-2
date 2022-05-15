@@ -10,6 +10,10 @@ env:
   DOCKER_PASSWORD_RUSIRU: ${{secrets.DOCKER_PASSWORD_RUSIRU}}
   ORDER_REPO_NAME_RUSIRU: ${{secrets.ORDER_REPO_NAME_RUSIRU}}
   EMAIL_REPO_NAME_RUSIRU: ${{secrets.EMAIL_REPO_NAME_RUSIRU}}
+  DOCKER_USER_SENURA: ${{secrets.DOCKER_USER_SENURA}}
+  DOCKER_PASSWORD_SENURA: ${{secrets.DOCKER_PASSWORD_SENURA}}
+  CART_REPO_NAME_SENURA: ${{secrets.CART_REPO_NAME_SENURA}}
+  PRODUCT_REPO_NAME_SENURA: ${{secrets.PRODUCT_REPO_NAME_SENURA}}
 
 jobs:
   order-service:
@@ -41,4 +45,31 @@ jobs:
         docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
     - name: Push email service docker image
       run: docker push $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
-    
+  
+  cart-service:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker login
+      run: | # Login to Dockerhub - Senura
+        docker login -u $DOCKER_USER_SENURA -p $DOCKER_PASSWORD_SENURA
+    - name: Build cart service docker image
+      run: |
+        cd src/cart_service
+        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:latest
+    - name: Push cart service docker image
+      run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:latest
+  
+  product-service:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker login
+      run: | # Login to Dockerhub - Senura
+        docker login -u $DOCKER_USER_SENURA -p $DOCKER_PASSWORD_SENURA
+    - name: Build product service docker image
+      run: |
+        cd src/product_service
+        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:latest
+    - name: Push cart service docker image
+      run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:latest
