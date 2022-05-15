@@ -1,3 +1,11 @@
+Create an executable jar file
+----------------------------------
+mvn clean package
+
+Start up the Spring Boot application
+-----------------------------------------
+java -jar target/productservice-1.0.0.jar
+
 Build Docker Image
 ---------------------------------------------------------
 docker build -t product_service:latest .

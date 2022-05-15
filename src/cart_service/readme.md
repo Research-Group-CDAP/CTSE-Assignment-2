@@ -1,10 +1,18 @@
+Create an executable jar file
+----------------------------------
+mvn clean package
+
+Start up the Spring Boot application
+-----------------------------------------
+java -jar target/cartservice-1.0.0.jar
+
 Build Docker Image
 ---------------------------------------------------------
 docker build -t cart_service:latest .
 
 Run Docker Image
 ---------------------------------------------------------
-docker run -p 8080:8080 cart_service:latest 
+docker run -p 8081:8081 cart_service:latest 
 
 List the Docker Images
 ------------------------------
