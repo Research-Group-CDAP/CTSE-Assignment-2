@@ -66,7 +66,7 @@ jobs:
         cd src/cart_service
         docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1.0.1
     - name: Push cart service docker image
-      run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1.0.0
+      run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1.0.1
     - uses: Azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
@@ -95,7 +95,7 @@ jobs:
         cd src/product_service
         docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.1
     - name: Push cart service docker image
-      run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.0
+      run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.1
     - uses: Azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
