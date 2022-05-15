@@ -2,7 +2,7 @@ name: ClickToCart CI/CD Pipeline
 
 on:
   push:
-    branches: [ development ]
+    branches: [ master ]
   workflow_dispatch:
 
 env:
@@ -67,6 +67,13 @@ jobs:
         docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:latest
     - name: Push cart service docker image
       run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:latest
+    - uses: Azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ctse
+        resource-group: CTSE
+    - name: Deploy to K8s
+      run: kubectl apply -f release/cart-service.yaml
   
   product-service:
     runs-on: ubuntu-latest
@@ -89,3 +96,10 @@ jobs:
         docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:latest
     - name: Push cart service docker image
       run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:latest
+    - uses: Azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ctse
+        resource-group: CTSE
+    - name: Deploy to K8s
+      run: kubectl apply -f release/product-service.yaml
