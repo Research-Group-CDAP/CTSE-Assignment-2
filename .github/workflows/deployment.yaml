@@ -14,6 +14,10 @@ env:
   DOCKER_PASSWORD_SENURA: ${{secrets.DOCKER_PASSWORD_SENURA}}
   CART_REPO_NAME_SENURA: ${{secrets.CART_REPO_NAME_SENURA}}
   PRODUCT_REPO_NAME_SENURA: ${{secrets.PRODUCT_REPO_NAME_SENURA}}
+  DOCKER_USER_LASAL: ${{secrets.DOCKER_USER_LASAL}}
+  DOCKER_PASSWORD_LASAL: ${{secrets.DOCKER_PASSWORD_LASAL}}
+  AUTH_REPO_NAME_LASAL: ${{secrets.AUTH_REPO_NAME_LASAL}}
+  USER_REPO_NAME_LASAL: ${{secrets.USER_REPO_NAME_LASAL}}
 
 jobs:
   order-service:
@@ -45,7 +49,35 @@ jobs:
         docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:v1.0.0
     - name: Push email service docker image
       run: docker push $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:v1.0.0
+
+  user-service:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker login
+      run: | # Login to Dockerhub - Rusriu
+        docker login -u $DOCKER_USER_LASAL -p $DOCKER_PASSWORD_LASAL
+    - name: Build user service docker image
+      run: |
+        cd src/user_service
+        docker build . --file Dockerfile --tag $DOCKER_USER_LASAL/$USER_REPO_NAME_LASAL:v1.0.0
+    - name: Push user service docker image
+      run: docker push $DOCKER_USER_LASAL/$USER_REPO_NAME_LASAL:v1.0.0
   
+  auth-service:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker login
+      run: | # Login to Dockerhub - Rusriu
+        docker login -u $DOCKER_USER_LASAL -p $DOCKER_PASSWORD_LASAL
+    - name: Build auth service docker image
+      run: |
+        cd src/auth_service
+        docker build . --file Dockerfile --tag $DOCKER_USER_LASAL/$AUTH_REPO_NAME_LASAL:v1.0.0
+    - name: Push auth service docker image
+      run: docker push $DOCKER_USER_LASAL/$AUTH_REPO_NAME_LASAL:v1.0.0
+
   cart-service:
     runs-on: ubuntu-latest
     steps:
@@ -91,7 +123,7 @@ jobs:
       run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.1
   
   deploy:
-    needs: [order-service, email-service, cart-service, product-service]
+    needs: [order-service, email-service, cart-service, product-service,user-service,auth-service]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
