@@ -57,6 +57,14 @@ public class PaymentServiceImpl implements PaymentService {
 		paymentRequest.setOrderFee(orderFee);
 		paymentRequest.setProducts(products);
 		paymentRequest.setUserInfo(user.get());
+		
+		try {
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		
 		return null;
 		
 	}

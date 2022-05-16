@@ -36,6 +36,7 @@ public class PaymentController {
 			
 			paymentService.addPayment(newCart, paymentRequest);
 		}
+		return null;
 	}
 	
 }
