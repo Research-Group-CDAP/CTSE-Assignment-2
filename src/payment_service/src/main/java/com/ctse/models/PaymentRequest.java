@@ -14,6 +14,15 @@ public class PaymentRequest {
 	private float orderFee;
 	private List<Product> products;
 	private User userInfo;
+	private String accountNumber;
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 
 	public String getOrderDescription() {
 		return orderDescription;

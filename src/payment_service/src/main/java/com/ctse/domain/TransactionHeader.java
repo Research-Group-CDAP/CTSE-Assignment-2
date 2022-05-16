@@ -5,8 +5,6 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jdk.jfr.Timespan;
-
 @Document(value = "transactionHeaders")
 public class TransactionHeader {
 
@@ -17,7 +15,7 @@ public class TransactionHeader {
 	
 	private String userId;
 	
-	private String totalPrice;
+	private float totalPrice;
 	
 	private String status;
 	
@@ -27,7 +25,7 @@ public class TransactionHeader {
 	
 	private Date modifiedDate;
 
-	public TransactionHeader(String id, String orderId, String userId, String totalPrice, String status,
+	public TransactionHeader(String id, String orderId, String userId, float totalPrice, String status,
 			String fromAccount, Date createdDate, Date modifiedDate) {
 		super();
 		this.id = id;
@@ -38,6 +36,10 @@ public class TransactionHeader {
 		this.fromAccount = fromAccount;
 		this.createdDate = createdDate;
 		this.modifiedDate = modifiedDate;
+	}
+
+	public TransactionHeader() {
+		super();
 	}
 
 	public String getId() {
@@ -64,11 +66,11 @@ public class TransactionHeader {
 		this.userId = userId;
 	}
 
-	public String getTotalPrice() {
+	public float getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(String totalPrice) {
+	public void setTotalPrice(float totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
