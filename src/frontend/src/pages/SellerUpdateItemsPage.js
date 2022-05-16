@@ -11,14 +11,11 @@ class SellerUpdateItemsPage extends Component {
         this.onUpdateItem = this.onUpdateItem.bind(this)
 
         this.state = {
-            name:"",
-            brand:"",
-            ram:"",
-            storage:"",
-            price:"",
-            description:"",
-            imgLink:"",
-            stock:"",
+            productTitle: "",
+            imageUrl: "",
+            price: "",
+            categoryId: "",
+            quantity: "",
             processStatus: false,
             processStatusAlert: "",
             processStatusMessage: "",
@@ -26,10 +23,8 @@ class SellerUpdateItemsPage extends Component {
     };
 
     componentDidMount() {
-        this.props.fetchItemById(this.props.match.params.itemid)
-        this.setState({name:this.props.item.name})
-
-        // const updatedItem =
+        this.props.fetchItemById(this.props.singleItem.id);
+        this.setState({productTitle:this.props.singleItem.productTitle});
     }
 
     onValueChange(e) {
@@ -46,16 +41,11 @@ class SellerUpdateItemsPage extends Component {
         });
 
         const updatedItem = {
-            name:this.state.name,
-            brand:this.state.brand,
-            ram:this.state.ram,
-            storage:this.state.storage,
-            price:this.state.price,
-            description:this.state.description,
-            imgLink:this.state.imgLink,
-            stock:this.state.price,
-            user:{id:this.props.user.id},
-            sellarName:this.props.user.username
+            productTitle: this.state.productTitle,
+            imageUrl: this.state.imageUrl,
+            price: this.state.price,
+            categoryId: "testId",
+            quantity: this.state.quantity,
         };
 
         this.props.updateItem(
@@ -89,23 +79,8 @@ class SellerUpdateItemsPage extends Component {
                                            onChange={(e) => {
                                                this.onValueChange(e);
                                            }}
-                                        value={this.state.name}
+                                        value={this.state.productTitle}
                                     />
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <label >Brand</label>
-                                    <select id="inputState" name="brand" className="form-control"
-                                            onChange={(e) => {
-                                                this.onValueChange(e);
-                                            }}
-                                    >
-                                        <option selected>Choose...</option>
-                                        <option value="Samsung">Samsung</option>
-                                        <option value="Apple">Apple</option>
-                                        <option value="Oppo">Oppo</option>
-                                        <option value="Nokia">Nokia</option>
-                                        <option value="Huawei">Huawei</option>
-                                    </select>
                                 </div>
                             </div>
                             <div className="form-row">
@@ -115,32 +90,9 @@ class SellerUpdateItemsPage extends Component {
                                            onChange={(e) => {
                                                this.onValueChange(e);
                                            }}
+                                           value={this.state.price}
                                     />
                                 </div>
-                                <div className="form-group col-md-2">
-                                    <label >RAM</label>
-                                    <input type="number" name="ram" className="form-control"  placeholder="Brand"
-                                           onChange={(e) => {
-                                               this.onValueChange(e);
-                                           }}
-                                    />
-                                </div>
-                                <div className="form-group col-md-2">
-                                    <label >Storage</label>
-                                    <input type="number" name="storage" className="form-control"  placeholder="Storage"
-                                           onChange={(e) => {
-                                               this.onValueChange(e);
-                                           }}
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label >Description</label>
-                                <input type="text" name="description" className="form-control" placeholder="Description"
-                                       onChange={(e) => {
-                                           this.onValueChange(e);
-                                       }}
-                                />
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-3">

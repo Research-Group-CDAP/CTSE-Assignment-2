@@ -27,12 +27,12 @@ export class ShoppingCart extends Component {
                         <div className="card ShoppingItemCard">
                           <img
                             className="card-img-top ShoppingItemImage"
-                            src={item.imgLink}
+                            src={item.imageUrl}
                             alt={`cartImg${item.id}`}
                           />
                           <div className="card-body text-center">
                             <h5 className="card-title text-dark">
-                              {item.name}
+                              {item.productTitle}
                             </h5>
                             <div className="row">
                               <div className="col-md-6 text-center">
@@ -44,7 +44,7 @@ export class ShoppingCart extends Component {
                               </div>
                               <div className="col-md-6 ">
                                 <p className="card-text text-secondary">
-                                  {item.sellarName}
+                                  Stock {item.quantity}
                                 </p>
                               </div>
                             </div>

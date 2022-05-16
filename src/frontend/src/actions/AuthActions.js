@@ -33,23 +33,24 @@ export const loginUser = (data, OnSuccess, OnFailure) => (dispatch) => {
     .auth()
     .login(data)
     .then((response) => {
-      var loginAccess = response.data.roles[0].localeCompare("ROLE_USER");
-      if (loginAccess === 0) {
-        dispatch({
-          type: ACTION_TYPES.LOGIN_SUCCESS,
-          payload: response.data,
+      localStorage.setItem("authToken", response.data.authToken);
+      api
+        .auth()
+        .getDetails(response.data.authToken)
+        .then((responseUser) => {
+          dispatch({
+            type: ACTION_TYPES.LOGIN_SUCCESS,
+            payload: responseUser.data,
+          });
+          OnSuccess();
+        })
+        .catch((err) => {
+          dispatch({
+            type: ACTION_TYPES.LOGIN_FAIL,
+            payload: err,
+          });
+          OnFailure();
         });
-        if (response.data.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
-        OnSuccess();
-      } else {
-        dispatch({
-          type: ACTION_TYPES.LOGIN_FAIL,
-          payload: null,
-        });
-        OnFailure();
-      }
     })
     .catch(() => {
       dispatch({
@@ -65,22 +66,25 @@ export const loginSeller = (data, OnSuccess, OnFailure) => (dispatch) => {
     .auth()
     .login(data)
     .then((response) => {
-      var loginAccess = response.data.roles[0].localeCompare("ROLE_MODERATOR");
-      if (loginAccess === 0) {
-        dispatch({
-          type: ACTION_TYPES.LOGIN_SUCCESS,
-          payload: response.data,
-        });
-        if (response.data.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
-        OnSuccess();
-      } else {
-        dispatch({
-          type: ACTION_TYPES.LOGIN_FAIL,
-          payload: null,
-        });
-        OnFailure();
+      if (response.data.authToken) {
+        localStorage.setItem("authToken", response.data.authToken);
+        api
+          .auth()
+          .getDetails()
+          .then((responseUser) => {
+            dispatch({
+              type: ACTION_TYPES.LOGIN_SUCCESS,
+              payload: responseUser.data,
+            });
+            OnSuccess();
+          })
+          .catch((err) => {
+            dispatch({
+              type: ACTION_TYPES.LOGIN_FAIL,
+              payload: err,
+            });
+            OnFailure();
+          });
       }
     })
     .catch((err) => {
@@ -93,7 +97,7 @@ export const loginSeller = (data, OnSuccess, OnFailure) => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("authToken");
   dispatch({
     type: ACTION_TYPES.LOGOUT,
   });

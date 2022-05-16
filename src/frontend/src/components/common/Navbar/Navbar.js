@@ -68,7 +68,7 @@ export class Navbar extends Component {
                 </a>
               </li>
               {this.props.user &&
-              this.props.user.roles[0] === "ROLE_MODERATOR" ? (
+              this.props.user.role === "Seller" ? (
                 ""
               ) : (
                 <li className="nav-item active">
@@ -85,7 +85,7 @@ export class Navbar extends Component {
             </ul>
             <ul className="navbar-nav mr-auto navLinkTab mr-sm-2">
               {this.props.isLoggedIn ? (
-                this.props.user.roles[0] === "ROLE_USER" ? (
+                this.props.user.roles === "User" ? (
                   <li className="nav-item active p-2">
                     <a
                       className="nav-link navLinkTab"
@@ -93,7 +93,7 @@ export class Navbar extends Component {
                       style={{ color: "#c4026d", fontSize: "20px" }}
                     >
                       <PeopleAltIcon />
-                      {this.props.user.username}
+                      {this.props.user.first_name + " " + this.props.user.last_name}
                     </a>
                   </li>
                 ) : (
@@ -104,7 +104,7 @@ export class Navbar extends Component {
                       style={{ color: "#c4026d" }}
                     >
                       <PeopleAltIcon />
-                      {this.props.user.username}
+                      {this.props.user.first_name + this.props.user.last_name}
                     </a>
                   </li>
                 )

@@ -9,10 +9,13 @@ class Register extends Component {
     this.onRegister = this.onRegister.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
     this.state = {
-      username: "",
+      first_name: "",
+      last_name: "",
       email: "",
+      mobileNumber: "",
+      address: "",
       password: "",
-      userRole: "",
+      role: "",
       processStatus: false,
       processStatusAlert: "",
       processStatusMessage: "",
@@ -32,12 +35,14 @@ class Register extends Component {
       processStatusMessage: "Please Wait...",
     });
 
-    const role = [this.state.userRole];
     const newUser = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-      role,
+      first_name:  this.state.first_name,
+      last_name:  this.state.last_name,
+      email:  this.state.email,
+      mobileNumber:  this.state.mobileNumber,
+      address:  this.state.address,
+      password:  this.state.password,
+      role:  this.state.role,
     };
 
     this.props.registerUser(
@@ -73,12 +78,24 @@ class Register extends Component {
               )}
             </div>
             <div className="form-group formDiv">
-              <label>Username</label>
+              <label>First Name</label>
               <input
                 type="text"
-                name="username"
+                name="first_name"
                 className="form-control"
-                placeholder="Enter username"
+                placeholder="Enter First Name"
+                onChange={(e) => {
+                  this.onValueChange(e);
+                }}
+              />
+            </div>
+            <div className="form-group formDiv">
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="last_name"
+                className="form-control"
+                placeholder="Enter Last Name"
                 onChange={(e) => {
                   this.onValueChange(e);
                 }}
@@ -100,6 +117,31 @@ class Register extends Component {
               </small>
             </div>
             <div className="form-group formDiv">
+              <label>Mobile</label>
+              <input
+                type="text"
+                name="mobileNumber"
+                className="form-control"
+                placeholder="Enter Mobile Number"
+                onChange={(e) => {
+                  this.onValueChange(e);
+                }}
+              />
+            </div>
+            <div className="form-group formDiv">
+              <label>Address</label>
+              <input
+                type="text"
+                name="address"
+                className="form-control"
+                placeholder="Enter Address"
+                onChange={(e) => {
+                  this.onValueChange(e);
+                }}
+              />
+            </div>
+            
+            <div className="form-group formDiv">
               <label>Password</label>
               <input
                 type="password"
@@ -112,10 +154,10 @@ class Register extends Component {
               />
             </div>
             <div className="form-group formDiv">
-              <label>Account Type</label>
+              <label>Role</label>
               <select
                 className="form-control"
-                name="userRole"
+                name="role"
                 onChange={(e) => {
                   this.onValueChange(e);
                 }}

@@ -18,20 +18,20 @@ class ExploreShoppingCartList extends Component {
                   <div className="card ShoppingItemCard">
                     <img
                       className="card-img-top ExploreShoppingItemImage"
-                      src={item.imgLink}
+                      src={item.imageUrl}
                       alt={`cartImg${item.id}`}
                     />
                     <div className="card-body text-center">
-                      <h5 className="card-title text-dark">{item.name}</h5>
+                      <h5 className="card-title text-dark">{item.productTitle}</h5>
                       <div className="row">
                         <div className="col-md-6 text-center">
                           <p className="card-text">
-                            <span className="priceTag">{item.price}USD</span>
+                            <span className="priceTag">{item.price} LKR</span>
                           </p>
                         </div>
                         <div className="col-md-6">
                           <p className="card-text text-secondary">
-                            {item.sellarName}
+                            {item.quantity}
                           </p>
                         </div>
                       </div>

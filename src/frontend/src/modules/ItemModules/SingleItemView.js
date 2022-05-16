@@ -77,7 +77,7 @@ class SingleItemView extends Component {
             <div className="row">
               <div className="col-lg-12">
                 <img
-                  src={this.props.singleItem.imgLink}
+                  src={this.props.singleItem.imageUrl}
                   className="img-fluid"
                   alt="singleItemImg"
                 />
@@ -96,7 +96,7 @@ class SingleItemView extends Component {
                         <button
                           className="btn btn-warning btn-lg"
                           onClick={this.addItemToCartFunction}
-                          disabled={this.props.singleItem.stock <= 0}
+                          disabled={this.props.singleItem.quantity <= 0}
                         >
                           ADD TO CART <ShoppingCartIcon />
                         </button>
@@ -121,34 +121,10 @@ class SingleItemView extends Component {
             </div>
             <div className="row mb-2 singleItemRow">
               <div className="col-lg-3 col-md-3 col-sm-3 text-muted singleItemCol">
-                Brand
+                Product
               </div>
               <div className="col-lg-8 col-md-8 col-sm-8 text-left singleItemCol">
-                {this.props.singleItem.brand}
-              </div>
-            </div>
-            <div className="row mb-2 singleItemRow">
-              <div className="col-lg-3 col-md-3 col-sm-3 text-muted singleItemCol">
-                RAM
-              </div>
-              <div className="col-lg-8 col-md-8 col-sm-8 text-left singleItemCol">
-                {this.props.singleItem.ram} GB
-              </div>
-            </div>
-            <div className="row mb-2 singleItemRow">
-              <div className="col-lg-3 col-md-3 col-sm-3 text-muted singleItemCol">
-                Storage
-              </div>
-              <div className="col-lg-8 col-md-8 col-sm-8 text-left singleItemCol">
-                {this.props.singleItem.storage} GB
-              </div>
-            </div>
-            <div className="row mb-2 singleItemRow">
-              <div className="col-lg-3 col-md-3 col-sm-3 text-muted singleItemCol">
-                Seller
-              </div>
-              <div className="col-lg-8 col-md-8 col-sm-8 text-left singleItemCol">
-                {this.props.singleItem.sellarName}
+                {this.props.singleItem.productTitle}
               </div>
             </div>
             <div className="row mb-2 singleItemRow">
@@ -156,15 +132,7 @@ class SingleItemView extends Component {
                 Price
               </div>
               <div className="col-lg-8 col-md-8 col-sm-8 text-left singleItemCol">
-                {this.props.singleItem.price}
-              </div>
-            </div>
-            <div className="row mb-2 singleItemRow">
-              <div className="col-lg-3 col-md-3 col-sm-3 text-muted singleItemCol">
-                Description
-              </div>
-              <div className="col-lg-8 col-md-8 col-sm-8 text-left singleItemCol">
-                {this.props.singleItem.description}
+                {this.props.singleItem.price} LKR
               </div>
             </div>
             <div className="row mb-2 singleItemRow">
@@ -173,7 +141,7 @@ class SingleItemView extends Component {
               </div>
               <div className="col-lg-8 col-md-8 col-sm-8 text-left singleItemCol">
                 <span style={{ fontWeight: "bolder" }}>
-                  {this.props.singleItem.stock}
+                  {this.props.singleItem.quantity}
                 </span>
               </div>
             </div>

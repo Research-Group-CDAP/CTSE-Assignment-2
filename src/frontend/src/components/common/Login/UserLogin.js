@@ -30,7 +30,7 @@ class UserLogin extends Component {
     });
 
     const loginUser = {
-      username: this.state.username,
+      email: this.state.username,
       password: this.state.password,
     };
 
