@@ -1,6 +1,7 @@
 import User from '../models/user.model.js'
 import bcrypt from "bcrypt"
 import authApi from "../apis/auth.api.js"
+import jwt from "jsonwebtoken"
 const register = async (req, res) => {
     const { first_name, last_name, email, mobileNumber, address, password, role } = req.body;
     try {
@@ -152,6 +153,19 @@ const getUserDetailsbyID = async (req, res) => {
         res.status(500).send("Server Error");
     }
 }
+const getUserDetailsbytoken = async (req, res) => {
+    try {
+        const secret = process.env.JWT_SECRET;
+        const authToken = req.header("Authorization");
+        const decodedToken = jwt.verify(authToken, secret);
+        const user = await User.findById(decodedToken._id).select("-password")
+        res.json(user);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Server Error");
+    }
+}
+
 const getUserList = async (req, res) => {
     try {
         const userList = await User.find().select("-password")
@@ -162,4 +176,4 @@ const getUserList = async (req, res) => {
     }
 }
 
-export { register, login, updateUser, deleteUser, getUserDetailsbyID, getUserList }
+export { register, login, updateUser, deleteUser, getUserDetailsbyID,getUserDetailsbytoken, getUserList }
