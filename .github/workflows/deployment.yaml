@@ -60,9 +60,9 @@ jobs:
     - name: Build user service docker image
       run: |
         cd src/user_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_LASAL/$USER_REPO_NAME_LASAL:v1.0.1
+        docker build . --file Dockerfile --tag $DOCKER_USER_LASAL/$USER_REPO_NAME_LASAL:v1.0.2
     - name: Push user service docker image
-      run: docker push $DOCKER_USER_LASAL/$USER_REPO_NAME_LASAL:v1.0.1
+      run: docker push $DOCKER_USER_LASAL/$USER_REPO_NAME_LASAL:v1.0.2
   
   auth-service:
     runs-on: ubuntu-latest
@@ -74,9 +74,9 @@ jobs:
     - name: Build auth service docker image
       run: |
         cd src/auth_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_LASAL/$AUTH_REPO_NAME_LASAL:v1.0.0
+        docker build . --file Dockerfile --tag $DOCKER_USER_LASAL/$AUTH_REPO_NAME_LASAL:v1.0.2
     - name: Push auth service docker image
-      run: docker push $DOCKER_USER_LASAL/$AUTH_REPO_NAME_LASAL:v1.0.0
+      run: docker push $DOCKER_USER_LASAL/$AUTH_REPO_NAME_LASAL:v1.0.2
 
   cart-service:
     runs-on: ubuntu-latest
