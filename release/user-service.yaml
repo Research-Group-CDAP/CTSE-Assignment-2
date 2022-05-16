@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: userservice
-          image: docker.io/lasalhettiarachchi/user-service:latest # Image that will be used to containers in the cluster
+          image: docker.io/lasalhettiarachchi/user-service:v1.0.1 # Image that will be used to containers in the cluster
           imagePullPolicy: Always
           ports:
             - containerPort: 5001 # The port that the container is running on in the cluster
