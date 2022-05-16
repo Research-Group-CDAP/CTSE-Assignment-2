@@ -2,7 +2,6 @@ package com.ctse.models;
 
 import java.util.List;
 
-import com.ctse.domain.Order;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

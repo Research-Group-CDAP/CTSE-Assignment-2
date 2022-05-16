@@ -28,7 +28,7 @@ public class Delivery {
 	}
 
 	public Delivery(String id, String customerName, String address, String mobileNumber, String customerId,
-			String totPrice, String status, List<Order> order) {
+			String totPrice, String status, String orderId) {
 		super();
 		this.id = id;
 		this.customerName = customerName;
