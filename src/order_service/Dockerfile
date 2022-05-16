@@ -15,8 +15,6 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build
 
 
-
-
 # Deploy
 
 FROM alpine:3.8

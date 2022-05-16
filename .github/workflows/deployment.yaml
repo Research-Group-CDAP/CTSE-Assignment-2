@@ -28,17 +28,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Work Dir
-      run: echo $(pwd)
     - name: Docker login
       run: | # Login to Dockerhub - Rusriu
         docker login -u $DOCKER_USER_RUSIRU -p $DOCKER_PASSWORD_RUSIRU
     - name: Build order service docker image
       run: |
         cd src/order_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:v1.0.0
+        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:v1.0.1
     - name: Push order service docker image
-      run: docker push $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:v1.0.0
+      run: docker push $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:v1.0.1
   
   email-service:
     runs-on: ubuntu-latest

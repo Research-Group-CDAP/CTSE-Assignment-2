@@ -17,3 +17,15 @@ func EnvEmailService() string {
 
 	return os.Getenv("EMAIL_SERVICE")
 }
+
+func EnvAuthService() string {
+	godotenv.Load()
+
+	return os.Getenv("AUTH_SERVICE")
+}
+
+func EnvUserService() string {
+	godotenv.Load()
+
+	return os.Getenv("USER_SERVICE")
+}
