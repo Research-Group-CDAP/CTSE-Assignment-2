@@ -25,18 +25,18 @@ public class ProductController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> insertProduct(@RequestBody Product product){
-        return productService.insertProduct(product);
+    public ResponseEntity<?> insertProduct(@RequestBody Product product,@RequestHeader("Authorization") String authorization){
+        return productService.insertProduct(product,authorization);
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<?> updateStudentById(@PathVariable String productId, @RequestBody Product product){
-        return productService.updateProductById(productId,product);
+    public ResponseEntity<?> updateStudentById(@PathVariable String productId, @RequestBody Product product, @RequestHeader("Authorization") String authorization){
+        return productService.updateProductById(productId,product,authorization);
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<?> deleteById(@PathVariable String productId){
-        return productService.deleteById(productId);
+    public ResponseEntity<?> deleteById(@PathVariable String productId,@RequestHeader("Authorization") String authorization){
+        return productService.deleteById(productId,authorization);
     }
 
 }

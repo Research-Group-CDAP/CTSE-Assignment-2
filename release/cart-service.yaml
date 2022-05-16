@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: cartservice
-          image: docker.io/senuradockacc/cart_service:v1.0.1 # Image that will be used to containers in the cluster
+          image: docker.io/senuradockacc/cart_service:v1.0.2 # Image that will be used to containers in the cluster
           imagePullPolicy: Always
           ports:
             - containerPort: 8081 # The port that the container is running on in the cluster
