@@ -40,6 +40,16 @@ spec:
                 secretKeyRef:
                   name: order-secret
                   key: EMAIL_SERVICE
+            - name: AUTH_SERVICE
+              valueFrom:
+                secretKeyRef:
+                  name: order-secret
+                  key: AUTH_SERVICE
+            - name: USER_SERVICE
+              valueFrom:
+                secretKeyRef:
+                  name: order-secret
+                  key: USER_SERVICE
 ---
 apiVersion: v1
 kind: Service
