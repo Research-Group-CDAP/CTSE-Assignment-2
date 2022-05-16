@@ -26,8 +26,8 @@ public class CartController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> insertCart(@RequestBody Cart cart){
-        return cartService.insertCart(cart);
+    public ResponseEntity<?> insertCart(@RequestBody Cart cart,@RequestHeader("Authorization") String authorization){
+        return cartService.insertCart(cart,authorization);
     }
 
     @PutMapping("/{cartId}")
@@ -75,8 +75,8 @@ public class CartController {
         return cartService.deleteById(cartId);
     }
 
-    @GetMapping("/test/api")
-    public ResponseEntity<?> callAPI(){
-        return cartService.callAPI();
-    }
+//    @GetMapping("/test/api")
+//    public ResponseEntity<?> callAPI(@RequestHeader("Authorization") String authorization){
+//        return cartService.callAPI(authorization);
+//    }
 }
