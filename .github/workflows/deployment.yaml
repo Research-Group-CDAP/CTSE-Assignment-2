@@ -2,7 +2,7 @@ name: ClickToCart CI/CD Pipeline
 
 on:
   push:
-    branches: [ development ]
+    branches: [ master ]
   workflow_dispatch:
 
 env:
@@ -28,9 +28,9 @@ jobs:
     - name: Build order service docker image
       run: |
         cd src/order_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:latest
+        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:v1.0.0
     - name: Push order service docker image
-      run: docker push $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:latest
+      run: docker push $DOCKER_USER_RUSIRU/$ORDER_REPO_NAME_RUSIRU:v1.0.0
   
   email-service:
     runs-on: ubuntu-latest
@@ -42,9 +42,9 @@ jobs:
     - name: Build email service docker image
       run: |
         cd src/email_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
+        docker build . --file Dockerfile --tag $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:v1.0.0
     - name: Push email service docker image
-      run: docker push $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:latest
+      run: docker push $DOCKER_USER_RUSIRU/$EMAIL_REPO_NAME_RUSIRU:v1.0.0
   
   cart-service:
     runs-on: ubuntu-latest
@@ -64,9 +64,9 @@ jobs:
     - name: Build cart service docker image
       run: |
         cd src/cart_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:latest
+        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1.0.1
     - name: Push cart service docker image
-      run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:latest
+      run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1.0.1
   
   product-service:
     runs-on: ubuntu-latest
@@ -86,6 +86,20 @@ jobs:
     - name: Build product service docker image
       run: |
         cd src/product_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:latest
+        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.1
     - name: Push cart service docker image
-      run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:latest
+      run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.1
+  
+  deploy:
+    needs: [order-service, email-service, cart-service, product-service]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: 🛠 Configure Kubernetes Credentials
+      uses: Azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ctse
+        resource-group: CTSE
+    - name: ⬆️ Deploy to K8s
+      run: kubectl apply -f release/
