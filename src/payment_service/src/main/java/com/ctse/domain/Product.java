@@ -66,5 +66,15 @@ public class Product {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
+	public Product(String id, String categoryId, String productTitle, String imageUrl, float price, int quantity) {
+		super();
+		this.id = id;
+		this.categoryId = categoryId;
+		this.productTitle = productTitle;
+		this.imageUrl = imageUrl;
+		this.price = price;
+		this.quantity = quantity;
+	}
 	
 }
