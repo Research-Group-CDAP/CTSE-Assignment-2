@@ -74,4 +74,9 @@ public class CartController {
     public ResponseEntity<?> deleteById(@PathVariable String cartId){
         return cartService.deleteById(cartId);
     }
+
+    @GetMapping("/test/api")
+    public ResponseEntity<?> callAPI(){
+        return cartService.callAPI();
+    }
 }

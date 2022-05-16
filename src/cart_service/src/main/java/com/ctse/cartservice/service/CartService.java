@@ -4,10 +4,11 @@ import com.ctse.cartservice.model.Cart;
 import com.ctse.cartservice.model.OrderProduct;
 import com.ctse.cartservice.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,9 @@ public class CartService {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     public ResponseEntity<?> getCartByUserId(String userId){
         Cart cart =  cartRepository.findByUserId(userId);
@@ -239,4 +243,27 @@ public class CartService {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
+
+    public ResponseEntity<?> callAPI(){
+        System.out.println("Hello World");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        try{
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<String> response = restTemplate.exchange(
+                    "https://jsonplaceholder.typicode.com/posts/", HttpMethod.GET, null,
+                    new ParameterizedTypeReference<String>(){});
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return new ResponseEntity<String>(response.getBody(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<String>("Something went wrong", HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
