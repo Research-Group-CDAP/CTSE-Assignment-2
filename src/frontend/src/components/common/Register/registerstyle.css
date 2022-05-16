@@ -1,0 +1,19 @@
+.formDiv {
+  margin-top: 2%;
+}
+
+.authFormModal {
+  color: azure;
+  background: rgb(227, 16, 2);
+  background: linear-gradient(
+    90deg,
+    rgba(227, 16, 2, 1) 0%,
+    rgba(255, 93, 0, 1) 0%,
+    rgba(244, 65, 0, 1) 0%,
+    rgba(245, 147, 0, 1) 100%,
+    rgba(216, 127, 3, 1) 100%,
+    rgba(216, 23, 2, 1) 100%,
+    rgba(187, 121, 5, 1) 100%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
