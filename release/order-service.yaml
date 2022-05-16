@@ -5,6 +5,8 @@ metadata:
 data:
   MONGO_URL: bW9uZ29kYitzcnY6Ly9ydXNpcnU6UmF2QjE5OThAbGlua3VwLWNsdXN0ZXIuYTFidmkubW9uZ29kYi5uZXQvY2xpY2t0b2NhcnQ/cmV0cnlXcml0ZXM9dHJ1ZSZ3PW1ham9yaXR5
   EMAIL_SERVICE: aHR0cDovLzEwLjAuNDEuMTAyOjkwNDA=
+  AUTH_SERVICE: aHR0cDovLzEwLjAuMTE1LjY1OjUwMDIvYXBpL2F1dGgvYXV0aG9yaXplQnV5ZXI=
+  USER_SERVICE: aHR0cDovLzEwLjAuMjMzLjE3MTo1MDAxL2FwaS91c2VyL3VzZXJfdG9rZW4vZ2V0ZGV0YWlscw==
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -24,7 +26,7 @@ spec:
     spec:
       containers:
         - name: orderservice
-          image: docker.io/rusiruavb/order-service:v1.0.0
+          image: docker.io/rusiruavb/order-service:v1.0.1
           ports:
             - containerPort: 9090
           env:

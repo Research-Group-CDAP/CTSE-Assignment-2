@@ -12,7 +12,7 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("📦 Order Service")
+		return c.SendString("📦 Order Service v1.0.1")
 	})
 
 	routes.OrderRoutes(app)
