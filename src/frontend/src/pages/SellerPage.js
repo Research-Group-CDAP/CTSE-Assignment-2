@@ -8,14 +8,12 @@ import LoadingComponent from "../components/common/LoadingComponent/LoadingCompo
 
 class SellerPage extends Component {
   componentDidMount() {
-    this.props.fetchAllItemsBySellarID(this.props.user.id);
-    this.props.fetchStockByBrandSellar(this.props.user.id);
+    this.props.fetchAllItems();
   }
   render() {
     return (
       <div>
-        {this.props.stockBrandListPending &&
-        this.props.sellarItemListPending ? (
+        { this.props.itemListPending ? (
           <LoadingComponent />
         ) : (
           <div>
@@ -31,12 +29,11 @@ class SellerPage extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.authReducer.user,
-  sellarItemListPending: state.itemReducer.sellarItemListPending,
-  stockBrandListPending: state.itemReducer.stockBrandListPending,
+  itemListPending: state.itemReducer.itemListPending,
 });
 
 const mapActionToProps = {
   fetchStockByBrandSellar: actions.fetchStockByBrandSellar,
-  fetchAllItemsBySellarID: actions.fetchAllItemsBySellarID,
+  fetchAllItems: actions.fetchAllItems,
 };
 export default connect(mapStateToProps, mapActionToProps)(SellerPage);

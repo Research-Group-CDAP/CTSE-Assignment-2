@@ -8,7 +8,6 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import UpdateStockModal from "../modules/AdminPageModules/UpdateStockModal/UpdateStockModal";
 import UpdateItem from "../modules/AdminPageModules/UpdateItem/UpdateItem";
 
-
 class SellerViewItemPage extends Component {
 
     constructor(props) {
@@ -23,7 +22,7 @@ class SellerViewItemPage extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchAllItemsBySellarID(this.props.user.id);
+        this.props.fetchAllItems();
     }
 
     toggle() {
@@ -43,15 +42,9 @@ class SellerViewItemPage extends Component {
                             <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Brand</th>
-                                <th scope="col">Sellar</th>
-                                <th scope="col">Stock</th>
-                                <th scope="col">Ram</th>
-                                <th scope="col">Update</th>
-                                <th scope="col">Delete</th>
-                                <th scope="col">Add stock</th>
-
+                                <th scope="col">Product Title</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -59,11 +52,9 @@ class SellerViewItemPage extends Component {
                                 return (
                                     <tr>
                                         <th scope="row">{singleItem.id}</th>
-                                        <td>{singleItem.name}</td>
-                                        <td>{singleItem.brand}</td>
-                                        <td>{singleItem.sellarName}</td>
-                                        <td>{singleItem.stock}</td>
-                                        <td>{singleItem.ram}</td>
+                                        <td>{singleItem.productTitle}</td>
+                                        <td>{singleItem.price}</td>
+                                        <td>{singleItem.quantity}</td>
                                         <td>
                                             <button type="button" className="btn btn-outline-info"
                                                     onClick={() => {
@@ -76,24 +67,11 @@ class SellerViewItemPage extends Component {
                                         <td>
                                             <button type="button" className="btn btn-outline-danger" onClick={()=>{
                                                 this.props.deleteItem(singleItem.id,()=>{
-
+                                                    this.props.fetchAllItems();
                                                 },()=>{
-
+                                                    this.props.fetchAllItems();
                                                 });
                                             }}>DELETE</button>
-                                        </td>
-                                        <td>
-                                            <button onClick={() => {
-                                                this.setState({
-                                                    singleItem:singleItem
-                                                });
-                                                this.toggle()
-                                            }}
-                                            className="bg-transparent border-0">
-                                                <Icon className="fa fa-plus-circle" color="secondary" />
-                                            </button>
-
-
                                         </td>
                                     </tr>
                                 );
@@ -109,7 +87,7 @@ class SellerViewItemPage extends Component {
                             UPDATE STOCK
                         </ModalHeader>
                         <ModalBody>
-                            <UpdateStockModal singleItem={this.state.singleItem}/>
+                            <UpdateItem singleItem={this.state.singleItem}/>
                         </ModalBody>
                     </Modal>
                     {/* <!--Modal For Updating Stock end--> */}
@@ -134,11 +112,11 @@ class SellerViewItemPage extends Component {
 
 const mapStateToProps = (state) => ({
     user: state.authReducer.user,
-    sellarItemList:state.itemReducer.sellarItemList
+    sellarItemList:state.itemReducer.itemList
 });
 
 const mapActionToProps = {
-    fetchAllItemsBySellarID:actions.fetchAllItemsBySellarID,
+    fetchAllItems:actions.fetchAllItems,
     deleteItem:actions.deleteItem,
 };
 

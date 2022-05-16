@@ -14,14 +14,11 @@ class SellerAddItemsPage extends Component {
     this.onAddItem = this.onAddItem.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
     this.state = {
-      name: "",
-      brand: "",
-      ram: "",
-      storage: "",
+      productTitle: "",
+      imageUrl: "",
       price: "",
-      description: "",
-      imgLink: "",
-      stock: "",
+      categoryId: "",
+      quantity: "",
       processStatus: false,
       processStatusAlert: "",
       processStatusMessage: "",
@@ -44,7 +41,7 @@ class SellerAddItemsPage extends Component {
       processStatusMessage: "Please Wait...",
     });
 
-    if (!this.state.imgLink) {
+    if (!this.state.imageUrl) {
       this.setState({
         processStatus: true,
         processStatusAlert: "alert alert-warning",
@@ -54,16 +51,11 @@ class SellerAddItemsPage extends Component {
     }
 
     const newItem = {
-      name: this.state.name,
-      brand: this.state.brand,
-      ram: this.state.ram,
-      storage: this.state.storage,
+      productTitle: this.state.productTitle,
+      imageUrl: this.state.imageUrl,
       price: this.state.price,
-      description: this.state.description,
-      imgLink: this.state.imgLink,
-      stock: this.state.stock,
-      user: { id: this.props.user.id },
-      sellarName: this.props.user.username,
+      categoryId: "testId",
+      quantity: this.state.quantity,
     };
 
     this.props.addItem(
@@ -115,7 +107,7 @@ class SellerAddItemsPage extends Component {
             .getDownloadURL()
             .then((url) => {
               console.log(url);
-              this.setState({ imgLink: url });
+              this.setState({ imageUrl: url });
               this.setState({
                 processStatusAlert: "alert alert-success",
                 processStatusMessage: "Image uploaded successfully",
@@ -142,41 +134,22 @@ class SellerAddItemsPage extends Component {
           <div className="card-body">
             <form onSubmit={this.onAddItem}>
               <div className="form-row">
-                <div className="form-group col-md-6">
+                <div className="form-group col-md-12">
                   <label>Name</label>
                   <input
                     type="text"
-                    name="name"
+                    name="productTitle"
                     className="form-control"
-                    placeholder="Name"
+                    placeholder="Product Name"
                     onChange={(e) => {
                       this.onValueChange(e);
                     }}
                     required
                   />
                 </div>
-                <div className="form-group col-md-4">
-                  <label>Brand</label>
-                  <select
-                    id="inputState"
-                    name="brand"
-                    className="form-control"
-                    onChange={(e) => {
-                      this.onValueChange(e);
-                    }}
-                    required
-                  >
-                    <option selected>Choose...</option>
-                    <option value="Samsung">Samsung</option>
-                    <option value="Apple">Apple</option>
-                    <option value="Oppo">Oppo</option>
-                    <option value="Nokia">Nokia</option>
-                    <option value="Huawei">Huawei</option>
-                  </select>
-                </div>
               </div>
               <div className="form-row">
-                <div className="form-group col-md-2">
+                <div className="form-group col-md-12">
                   <label>Price</label>
                   <input
                     type="number"
@@ -189,40 +162,14 @@ class SellerAddItemsPage extends Component {
                     required
                   />
                 </div>
-                <div className="form-group col-md-2">
-                  <label>RAM</label>
-                  <input
-                    type="number"
-                    name="ram"
-                    className="form-control"
-                    placeholder="Brand"
-                    onChange={(e) => {
-                      this.onValueChange(e);
-                    }}
-                    required
-                  />
-                </div>
-                <div className="form-group col-md-2">
-                  <label>Storage</label>
-                  <input
-                    type="number"
-                    name="storage"
-                    className="form-control"
-                    placeholder="Storage"
-                    onChange={(e) => {
-                      this.onValueChange(e);
-                    }}
-                    required
-                  />
-                </div>
               </div>
               <div className="form-group">
-                <label>Description</label>
+                <label>Quantity</label>
                 <input
-                  type="text"
-                  name="description"
+                  type="number"
+                  name="quantity"
                   className="form-control"
-                  placeholder="Description"
+                  placeholder="quantity"
                   onChange={(e) => {
                     this.onValueChange(e);
                   }}
@@ -230,24 +177,10 @@ class SellerAddItemsPage extends Component {
                 />
               </div>
               <div className="form-row">
-                <div className="form-group col-md-3">
-                  <label>Stock</label>
-                  <input
-                    type="number"
-                    name="stock"
-                    className="form-control"
-                    onChange={(e) => {
-                      this.onValueChange(e);
-                    }}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="form-row">
                 <div className="form-group">
-                  {this.state.imgLink ? (
+                  {this.state.imageUrl ? (
                     <img
-                      src={this.state.imgLink}
+                      src={this.state.imageUrl}
                       alt="productImg"
                       style={{ width: "150px" }}
                     />
