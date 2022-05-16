@@ -100,9 +100,9 @@ jobs:
     - name: Build cart service docker image
       run: |
         cd src/cart_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1.0.1
+        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1.0.2
     - name: Push cart service docker image
-      run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1.0.1
+      run: docker push $DOCKER_USER_SENURA/$CART_REPO_NAME_SENURA:v1.0.2
   
   product-service:
     runs-on: ubuntu-latest
@@ -122,9 +122,9 @@ jobs:
     - name: Build product service docker image
       run: |
         cd src/product_service
-        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.1
+        docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.2
     - name: Push cart service docker image
-      run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.1
+      run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.2
 
   delivery-service:
     runs-on: ubuntu-latest
