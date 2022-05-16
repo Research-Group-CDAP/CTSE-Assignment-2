@@ -1,0 +1,36 @@
+.userpurchasedtable {
+  /* background-image: linear-gradient(
+    to right top,
+    #ed5d00,
+    #f17b00,
+    #f39800,
+    #f3b300,
+    #f0cd12
+  ); */
+  /* background-image: linear-gradient(
+    to right top,
+    #bf0461,
+    #cb0161,
+    #d60060,
+    #e2005f,
+    #ed005d
+  ); */
+  background: rgb(227, 16, 2);
+  background: linear-gradient(
+    90deg,
+    rgba(227, 16, 2, 1) 0%,
+    rgba(237, 237, 232, 1) 0%,
+    rgba(237, 237, 232, 1) 100%,
+    rgba(218, 218, 218, 1) 100%,
+    rgba(187, 121, 5, 1) 100%,
+    rgba(255, 255, 255, 1) 100%,
+    rgba(255, 255, 255, 1) 100%,
+    rgba(245, 147, 0, 1) 100%,
+    rgba(216, 127, 3, 1) 100%
+  );
+  color: rgb(27, 27, 27);
+}
+
+.profileDetailsRow {
+  background-color: #edede8;
+}

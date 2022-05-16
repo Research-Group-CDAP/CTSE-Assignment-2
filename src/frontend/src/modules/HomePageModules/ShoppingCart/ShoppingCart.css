@@ -1,0 +1,31 @@
+.ShoppingItemCard {
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(236, 236, 236, 0.5);
+  overflow: hidden;
+}
+
+.priceTag {
+  color: aliceblue;
+  background-color: #232f3e;
+  padding: 3px 5px;
+  border-radius: 8px;
+}
+
+.ShoppingItemImage {
+  height: 300px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  transition: all 0.5s ease-in-out;
+}
+
+.ShoppingCartSingleItemCol {
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ShoppingCartSingleItemCol:hover .ShoppingItemImage {
+  transform: scale(1.1);
+  cursor: pointer;
+}

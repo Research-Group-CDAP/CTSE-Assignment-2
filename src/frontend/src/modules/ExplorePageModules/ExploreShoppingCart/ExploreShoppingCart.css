@@ -1,0 +1,16 @@
+.ExploreShoppingItemImage {
+  height: 180px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  transition: all 0.5s ease-in-out;
+}
+
+.ShoppingCartSingleItemCol {
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ShoppingCartSingleItemCol:hover .ExploreShoppingItemImage {
+  transform: scale(1.1);
+  cursor: pointer;
+}
