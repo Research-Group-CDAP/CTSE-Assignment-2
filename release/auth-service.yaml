@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: authservice
-          image: docker.io/lasalhettiarachchi/auth-service::v1.0.2 # Image that will be used to containers in the cluster
+          image: docker.io/lasalhettiarachchi/auth-service:v1.0.2 # Image that will be used to containers in the cluster
           imagePullPolicy: Always
           ports:
             - containerPort: 5002 # The port that the container is running on in the cluster
