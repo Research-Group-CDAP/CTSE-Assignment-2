@@ -56,9 +56,9 @@ const authorizeSeller = async (req, res) => {
 			const authToken = req.header("Authorization");
 			const decodedToken = jwt.verify(authToken, secret);
             if(privillages.includes(decodedToken.role)){
-                return res.status(200).send("Success");
+                return res.status(200).json({isAuthorized:true});
             }else{
-                return res.status(401).send("Unathorized");
+                return res.status(401).json({isAuthorized:false});
             }
 
 		} else {
@@ -78,9 +78,9 @@ const authorizeBuyer = async (req, res) => {
 			const authToken = req.header("Authorization");
 			const decodedToken = jwt.verify(authToken, secret);
             if(privillages.includes(decodedToken.role)){
-                return res.status(200).send("Success");
+                return res.status(200).json({isAuthorized:true});
             }else{
-                return res.status(401).send("Unathorized");
+                return res.status(401).json({isAuthorized:false});
             }
 
 
