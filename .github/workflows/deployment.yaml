@@ -18,6 +18,9 @@ env:
   DOCKER_PASSWORD_LASAL: ${{secrets.DOCKER_PASSWORD_LASAL}}
   AUTH_REPO_NAME_LASAL: ${{secrets.AUTH_REPO_NAME_LASAL}}
   USER_REPO_NAME_LASAL: ${{secrets.USER_REPO_NAME_LASAL}}
+  DOCKER_USER_DILMI: ${{secrets.DOCKER_USER_DILMI}}
+  DOCKER_PASSWORD_DILMI: ${{secrets.DOCKER_PASSWORD_DILMI}}
+  DELIVERY_REPO_NAME_DILMI: ${{secrets.DELIVERY_REPO_NAME_DILMI}}
 
 jobs:
   order-service:
@@ -121,9 +124,31 @@ jobs:
         docker build . --file Dockerfile --tag $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.1
     - name: Push cart service docker image
       run: docker push $DOCKER_USER_SENURA/$PRODUCT_REPO_NAME_SENURA:v1.0.1
+
+  delivery-service:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Java version
+      uses: actions/setup-java@v1
+      with:
+        java-version: '1.8'
+    - name: Build with Maven
+      run: |
+        cd src/delivery_service
+        mvn clean package
+    - name: Docker login
+      run: | # Login to Dockerhub - Senura
+        docker login -u $DOCKER_USER_DILMI -p $DOCKER_PASSWORD_DILMI
+    - name: Build delivery service docker image
+      run: |
+        cd src/delivery_service
+        docker build . --file Dockerfile --tag $DOCKER_USER_DILMI/$DELIVERY_REPO_NAME_DILMI:latest
+    - name: Push cart service docker image
+      run: docker push $DOCKER_USER_DILMI/$DELIVERY_REPO_NAME_DILMI:latest
   
   deploy:
-    needs: [order-service, email-service, cart-service, product-service,user-service,auth-service]
+    needs: [order-service, email-service, cart-service, product-service,user-service,auth-service,delivery-service]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
