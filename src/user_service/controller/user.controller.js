@@ -75,7 +75,7 @@ const login = async (req, res) => {
             authToken: authToken,
         }
         authApi.auth().registerAuth(authObj)
-        const resObj ={
+        const resObj = {
             authToken: authToken
         }
         res.json(resObj);
@@ -133,11 +133,19 @@ const updateUser = async (req, res) => {
 }
 const deleteUser = async (req, res) => {
     try {
-        await User.findByIdAndDelete(req.params.id)
-            .then(() => {
-                res.json("Employee Deleted");
-            })
-            .catch((err) => res.status(400).json("Error: " + err));
+        const authToken = req.header("Authorization");
+        const authresponse = await authApi.auth().authorizeAdmin(authToken)
+        if (authresponse.data.isAuthorized) {
+            await User.findByIdAndDelete(req.params.id)
+                .then(() => {
+                    res.json("Employee Deleted");
+                })
+                .catch((err) => res.status(400).json("Error: " + err));
+        }
+        else {
+            res.status(401).send("Unauthorized");
+        }
+
     } catch (err) {
         console.log(err.message);
         res.status(500).send("Server Error");
@@ -146,8 +154,16 @@ const deleteUser = async (req, res) => {
 }
 const getUserDetailsbyID = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select("-password")
-        res.json(user);
+        const authToken = req.header("Authorization");
+        const authresponse = await authApi.auth().authorizeAdmin(authToken)
+        if (authresponse.data.isAuthorized) {
+            const user = await User.findById(req.params.id).select("-password")
+            res.json(user);
+        }
+        else {
+            res.status(401).send("Unauthorized");
+        }
+
     } catch (err) {
         console.log(err.message);
         res.status(500).send("Server Error");
@@ -168,12 +184,19 @@ const getUserDetailsbytoken = async (req, res) => {
 
 const getUserList = async (req, res) => {
     try {
-        const userList = await User.find().select("-password")
-        res.json(userList);
+        const authToken = req.header("Authorization");
+        const authresponse = await authApi.auth().authorizeAdmin(authToken)
+        if (authresponse.data.isAuthorized) {
+            const userList = await User.find().select("-password")
+            res.json(userList);
+        }
+        else {
+            res.status(401).send("Unauthorized");
+        }
     } catch (err) {
         console.log(err.message);
-        res.status(500).send("Server Error");
+        return res.status(500).send("Server Error");
     }
 }
 
-export { register, login, updateUser, deleteUser, getUserDetailsbyID,getUserDetailsbytoken, getUserList }
+export { register, login, updateUser, deleteUser, getUserDetailsbyID, getUserDetailsbytoken, getUserList }

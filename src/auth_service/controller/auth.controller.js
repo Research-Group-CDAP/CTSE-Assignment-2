@@ -93,5 +93,29 @@ const authorizeBuyer = async (req, res) => {
     }
 }
 
+const authorizeAdmin = async (req, res) => {
+    try {
+		const secret = process.env.JWT_SECRET;
+        const privillages = [Role.Admin]
+		if (secret) {
+			const authToken = req.header("Authorization");
+            console.log(authToken)
+			const decodedToken = jwt.verify(authToken, secret);
+            if(privillages.includes(decodedToken.role)){
+                return res.status(200).json({isAuthorized:true});
+            }else{
+                return res.status(200).json({isAuthorized:false});
+            }
 
-export {addAuthConfig,authorize,authorizeSeller,authorizeBuyer}
+
+		} else {
+            return res.status(500).send("Secret not found");
+        }
+	} catch (err) {
+        console.error(err.message);
+        return res.status(500).send("Server Error");
+    }
+}
+
+
+export {addAuthConfig,authorize,authorizeSeller,authorizeBuyer,authorizeAdmin}
