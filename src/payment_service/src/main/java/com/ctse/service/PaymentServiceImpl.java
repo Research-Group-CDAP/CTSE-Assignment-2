@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ctse.dao.TransactionHeaderRepository;
 import com.ctse.dao.UserRepository;
 import com.ctse.domain.Cart;
 import com.ctse.domain.Product;
@@ -21,6 +22,9 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private TransactionHeaderRepository transactionHeaderRepository;
 
 	@Override
 	public ResponseEntity<?> addPayment(Cart newCart, PaymentRequest paymentRequest) {
@@ -49,9 +53,11 @@ public class PaymentServiceImpl implements PaymentService {
 		header.setCreatedDate(new Date());
 		header.setFromAccount(paymentRequest.getAccountNumber());
 		header.setModifiedDate(new Date());
-		header.setStatus("P");
+		header.setStatus("A");
 		header.setTotalPrice(orderFee);
 		header.setUserId(user.get().getId());
+		
+		transactionHeaderRepository.save(header);
 		
 		paymentRequest.setOrderDescription("Order was placed on " + new Date());
 		paymentRequest.setOrderFee(orderFee);
